@@ -4,7 +4,7 @@ Build a hotel recommender using collaborative-filtering from past reviews on Tri
 ### Motivation:
 According to Michele Walters, Co-Founder of Origin World Labs, hotel data science seems to have a plethora of untapped, solvable problems.
 
-[(article by Michele Watlters)](http://hotelexecutive.com/business_review/3619/hotel-data-science-a-new-profession-for-the-new-era-of-advanced-hospitality)
+[(article by Michele Walters)](http://hotelexecutive.com/business_review/3619/hotel-data-science-a-new-profession-for-the-new-era-of-advanced-hospitality)
 
 "This shortage will hit the hospitality industry especially hard as it tends to be 
 at the bottom of the totem pole for attracting analytical and technical talent. 
