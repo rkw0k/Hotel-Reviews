@@ -1,9 +1,10 @@
 ### Summary:
-Build a hotel recommender based on user similarities created from past reviews
-on TripAdvisor.
+Build a hotel recommender using collaborative-filtering from past reviews on TripAdvisor.
 
 ### Motivation:
-According to Michele Walters, Co-Founder of Origin World Labs [article by Michele Watlters](http://hotelexecutive.com/business_review/3619/hotel-data-science-a-new-profession-for-the-new-era-of-advanced-hospitality) hotel data science seems to have a plethora of untapped, solvable problems.
+According to Michele Walters, Co-Founder of Origin World Labs, hotel data science seems to have a plethora of untapped, solvable problems.
+
+[(article by Michele Watlters)](http://hotelexecutive.com/business_review/3619/hotel-data-science-a-new-profession-for-the-new-era-of-advanced-hospitality)
 
 "This shortage will hit the hospitality industry especially hard as it tends to be 
 at the bottom of the totem pole for attracting analytical and technical talent. 
@@ -17,7 +18,7 @@ obstacle to making data-driven progress is their inability to find enough qualif
 fill their analytics positions." 
 
 ### Deliverables:
-User will be able to link their TripAdvisor reviews and destination to receive a 
+User will be able to link their TripAdvisor reviews and destination city to receive a 
 rank of hotel recommendations.
 
 ### Data Sources:
@@ -35,6 +36,14 @@ Overview of data:
 [paper](http://sifaka.cs.uiuc.edu/~wang296/paper/p618.pdf),
 [slides](http://times.cs.uiuc.edu/~wang296/paper/latent-aspect-rating-analysis.pptx)
 
-### Process:
-Use tf-idf on the reviews grouped by user-ids. Use latent
+### Process
+1. Extract reviews and place into SQL database.
+2. Use tf-idf on the reviews grouped by user-ids. 
+3. Do train-test split on the users.
+4. Generate recommender feature matrix (utility matrix).
+5. Compute user-user recommender with various similarities
+6. Evaluate recommender based on test set using MSE.
 
+#### Potential problems
+1. Data sparsity. Will use matrix factorization or other dimensionality reduction.
+2. Not enough data. Will use TripAdvisor's API and scrape.
