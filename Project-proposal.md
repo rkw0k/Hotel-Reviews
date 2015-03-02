@@ -7,15 +7,11 @@ on TripAdvisor.
 business and that there is a wealth of creative strategies and tactics that can be found 
 when the data is analyzed by professionals. Yet, even for these big brands the single biggest 
 obstacle to making data-driven progress is their inability to find enough qualified talent to 
-fill their analytics positions.
-
-- Michele Walters, Co-Founder, Origin World Labs
+fill their analytics positions." -- Michele Walters, Co-Founder, Origin World Labs
 
 
 ### Deliverables:
-Probably a blog post with some interesting visualizations (maps of changes in business volume due to the recession, changes in economic activity in an area, tracking the emergence of new business areas, time series of restaurant volume).
-
-If the final product is a predictive model, could also have some app that predicts 1-year survival probability for an existing restaurant and the different factors that go into that.
+TBD
 
 ### Data Sources:
 Data was obtained by Professor Hongning Wang. He and co-authors have accompanying machine
@@ -33,3 +29,4 @@ paper: http://sifaka.cs.uiuc.edu/~wang296/paper/p618.pdf
 slides: 
 
 ### Process:
+TBD
