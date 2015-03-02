@@ -44,6 +44,6 @@ Overview of data:
 5. Compute user-user recommender with various similarities
 6. Evaluate recommender based on test set using MSE.
 
-#### Potential problems
+### Potential problems
 1. Data sparsity. Will use matrix factorization or other dimensionality reduction.
 2. Not enough data. Will use TripAdvisor's API and scrape.
