@@ -8,6 +8,7 @@ def open_parsed(filename):
 	'''
 
 	INPUT: filename of one hotel file with aspects.
+	
 	OUTPUT: array of user's aspect reviews from filename
 
 	example usage:
@@ -20,16 +21,8 @@ def open_parsed(filename):
 	f.close()
 	text = [word.split('\t') for word in text.splitlines()]
 	return text
+
 """
-	# every review consists of 14 entries 
-	# overall, value, room, loc, clean, check, serv, biz
-	firstN = len(text) / 14 
-	variables = [], [], [], [], [], [], [], []
-	for x in xrange(firstN):
-		# store the first firstN ratings for the aspects into arrays
-	    variables[0].append(int(text[14 * x + 3][0][-1]))
-	    for k in xrange(1, 8):
-	        variables[k].append(int(text[14 * x + 3][k]))
 
 	aspect = [[]]
 	for j in xrange(8):
