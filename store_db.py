@@ -46,19 +46,19 @@ def make_table():
 	cur.execute('''CREATE TABLE Key
 				   (Entry_id INT,
 				    Hotel_id INT,
-				    Author_id TEXT,
+				    Author_id TEXT
 				    ) ''')
 
 	cur.execute('''CREATE TABLE Hotel_info
 				   (Hotel_id INT,
 				    Price INT,
-				    Location TEXT,
+				    Location TEXT
 				    ) ''')
 
 	cur.execute('''CREATE TABLE Review
 				   (Entry_id INT,
 				    Review_date TEXT,
-				    Content VARCHAR(MAX)
+				    Content BLOB
 				    ) ''')
 
 	cur.execute('''CREATE TABLE Rating 
@@ -92,11 +92,13 @@ def make_table():
 					)''')
 
 def insert_hotel_table(hotel_info):
+	for h_info in hotel_info:
+		h_info = tuple(h_info)
+		cur.executemany("INSERT INTO Hotel_info VALUES(?,?,?)", h_info)
+	rows = cur.fetchall()
+	print rows
 
-	cur.execute(''' INSERT INTO Hotel_info VALUES 
-
-						) ''')
-	
 make_table()
 hotel_info = get_hotel_info()
-insert_table(hotel_info)
+print hotel_info[0], hotel_info[1], hotel_info[2]
+# insert_hotel_table(hotel_info)
