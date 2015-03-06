@@ -13,8 +13,9 @@ def get_hotel_info():
 	NOTE: 1674 out of 1850 hotels have prices. Missing prices are 
 		  indicated by -1
 	'''
-
-	f = open('../hotel_price_location.txt')
+	
+	filename = "C:\Users\Rickz\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\hotel-reviews\Hotel-Reviews\hotel_price_location.txt"
+	f = open(filename)
 	text = f.read()
 	f.close()
 	text = [word.split('\t') for word in text.splitlines()]
@@ -25,12 +26,10 @@ def get_hotel_info():
 		hotel_id = re.findall(hotel_regex, text[i][0])
 		price = text[i][1]
 		location = text[i][2]
-		if price.isdigit():
-			hotel_info.append((int(hotel_id[0][1:-1]), int(price), 					   location))
-		else:
-			hotel_info.append((int(hotel_id[0][1:-1]), -1, 							   location))
-	return tuple(hotel_info)
 
-# hotel_info = get_hotel_info()
-# print hotel_info
-# print hotel_info[45]
+		if price.isdigit():
+			hotel_info.append((int(hotel_id[0][1:-1]), int(price), location))
+		else:
+			hotel_info.append((int(hotel_id[0][1:-1]), -1, location))
+
+	return tuple(hotel_info)

@@ -1,8 +1,7 @@
 '''
-Extract text in read_one_aspect
+Extract text from <filename>
 '''
 import re
-from read_one_aspect import open_parsed
 
 def get_review(filename):
 	''' 
@@ -13,8 +12,11 @@ def get_review(filename):
 	OUTPUT: Text containing all the content of filename and hotel_id
 	
 	'''
-
-	text = open_parsed(filename)
+	f = open(filename)
+	text = f.read()
+	f.close()
+	
+	text = [word.split('\t') for word in text.splitlines()]
 	str_file = str(filename)
 	hotel_regex = re.compile(r"_[\d]+_")
 	hotel_id = re.findall(hotel_regex, str_file)[0]

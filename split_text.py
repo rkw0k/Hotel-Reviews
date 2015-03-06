@@ -13,22 +13,18 @@ Review: (Entry_id, Review_date, Content)
 
 Rating: (Entry_id, Overall, Value, Room, Location, Cleanliness, FrontDesk, Service, BusinessService)
 
-# Vocab: (Entry_id, Value_id, Room_id, Location_id, Cleanliness_id, FrontDesk_id, Service_id, BusinessService_id)
-
-# Vocab: (Entry_id, Aspect_id)
-
-Vocab: (Entry_id, Aspect_id, word)
+Vocab: (Entry_id, Aspect_id, vocab_word)
 
 Weight: (Entry_id, Value, Room, Location, Cleanliness, FrontDesk, Service, BusinessService)
 
 '''
 
 # import numpy as np
-import itertools
-import re
-from get_review import get_review
+# import itertools
+# from get_review import get_review
+# import re
 # hotel_regex = re.compile(r"_[\d]+_")
-vocab_regex = re.compile(r"([\w]+)")
+# vocab_regex = re.compile(r"([\w]+)")
 
 def split_text(text, Hotel_id, Entry_id=0):
 	''' 
@@ -39,61 +35,58 @@ def split_text(text, Hotel_id, Entry_id=0):
 	Key, Hotel_info, Rating, Review, Aspect.
 
 	USAGE: 
-	filename = r"../../Aspects/hotel_72572_parsed_parsed.txt"
+	filename = r"hotel_72572_parsed_parsed.txt"
 	text, Hotel_id = get_review(filename)
-	key, review, rating, vocab, weight = split_text(text, Hotel_id)
-
+	key, rating, review, vocab, weight = split_text(text, Hotel_id)
 
 	'''
-	key_tuple = []
-	review_tuple = []
-	rating_tuple = []
-	vocab_tuple = []
-	word_tuple = []
-	weight_tuple = []
 
-	# firstN = len(text) / 14 
-	firstN = 2 # first review if firstN = 1
+	firstN = len(text) / 14 
+	# firstN = 3 # first review if firstN = 1
+
+	key_tuple = [[0, 0, '']] * firstN
+	rating_tuple = [[0, 0, 0, 0, 0, 0, 0, 0, 0]] * firstN
+	review_tuple = [[0, '', '']] * firstN
+	vocab_tuple = []
+	weight_tuple = [[0, 0, 0, 0, 0, 0, 0, 0]] * firstN
 
 	for i in xrange(firstN):
 		''' Store the first firstN ratings for into tuples to be inserted into a sql table. '''
 
 		Entry_id += 1
 
+		# store the entire into separate temp variables
 		Author_id = text[14 * i ][0][8:]
 		Content = text[14 * i + 1][0][9:]
-		Review_date = text[14 * i + 2][0][6:]
 		Rating = text[14 * i + 3]
-		Aspect_all = text[14 * i + 5 : 14 * i + 12]
+		Review_date = text[14 * i + 2][0][6:]
+		Aspect = text[14 * i + 5 : 14 * i + 12]
+		
 		one_rating = []
-
 		for j in xrange(7):
-			raw_vocab = Aspect_all[j][1:-1]
-			one_rating.append(int(Aspect_all[j][0]))
+			''' loop through aspects: value, room, location, ... '''
+			one_rating.append(int(Aspect[j][0]))
+			raw_vocab = Aspect[j][1:-1]
 			for k in xrange(len(raw_vocab)):
+				# store all the words important to each aspect
 				if len(raw_vocab[k]) > 0:
-					word_entry = tuple([Entry_id, j + 1] + [raw_vocab[k]])
-					word_tuple.append(word_entry)
+					# only store if words are found
+					vocab_tuple.append(tuple([Entry_id, j + 1] + [raw_vocab[k]]))
 
-		key_tuple.append((Entry_id, int(Hotel_id), Author_id))
-		rating_tuple.append(tuple(([Entry_id] + [Rating[0][-1]] + Rating[1:-1])))
-		review_tuple.append(tuple((Entry_id, Review_date, Content)))
+		key_tuple[i] = (Entry_id, int(Hotel_id), Author_id)
+		rating_tuple[i] = tuple(([Entry_id] + [int(Rating[0][-1])] + map(int, Rating[1:-1])))
+		review_tuple[i] = tuple((Entry_id, Review_date, Content))
+		weight_tuple[i] = tuple([Entry_id] + one_rating)
 
-		weight_tuple.append(tuple([Entry_id] + one_rating))
+	return tuple(key_tuple), tuple(rating_tuple), tuple(review_tuple), tuple(vocab_tuple), tuple(weight_tuple), Entry_id
 
-		# print "key_tuple", key_tuple[x]
-		# print "review_tuple", review_tuple[x]
-		# print "rating_tuple", rating_tuple[x]
-		# print "vocab_tuple", vocab_tuple[x]
-		# print "weight_tuple", weight_tuple[x]
 
-	return tuple(key_tuple), tuple(review_tuple), tuple(rating_tuple), tuple(word_tuple), tuple(weight_tuple)
 
-filename = r"../../Aspects/hotel_72572_parsed_parsed.txt"
-text, Hotel_id = get_review(filename)
-key, review, rating, vocab,  weight = split_text(text, Hotel_id)
-print "key:", key
-print "review:", review
-print "rating:", rating
-print "(Entry_id, Aspect_id, vocab_word):", "\n", vocab
-print "weights:", weight
+"""
+debug code
+# print "key:", key
+# print "review:", review
+# print "rating:", rating
+# print "(Entry_id, Aspect_id, vocab_word):", "\n", vocab
+# print "weights:", weight
+"""

@@ -1,0 +1,3 @@
+hotel_100504_parsed_parsed.txt
+hotel_100505_parsed_parsed.txt
+hotel_100506_parsed_parsed.txt
