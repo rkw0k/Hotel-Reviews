@@ -23,7 +23,6 @@ def open_parsed(filename):
 	return text
 
 """
-
 	aspect = [[]]
 	for j in xrange(8):
 		# drop missing values indicated by -1 from values
