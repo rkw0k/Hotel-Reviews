@@ -7,7 +7,7 @@ import os
 import sqlite3 as lite
 
 def fill_database(cur):
-	# f = open("short_name.txt") # test on 10
+	# f = open("short_name.txt") # test on subset of 10
 	f = open('hotel_name.txt')
 	hotel_list = f.read().split()
 	f.close()

@@ -1,0 +1,9 @@
+# For Hotel_id1 = 100504, compare to other hotels
+
+select avg(Value), avg(Room), avg(Location), avg(Cleanliness)
+from Aspect_weight where Entry_id between
+(select min(Entry_id) from Key where Hotel_id = 100504)
+and
+(select max(Entry_id) from Key where Hotel_id = 100504)
+and Value > 0, Room > 0, Location > 0, Cleanliness > 0;
+

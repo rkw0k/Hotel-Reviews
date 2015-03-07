@@ -6,7 +6,7 @@ Aspect1 = Value (V)
 Aspect2 = Room (R) 
 Aspect3 = Location (L)
 Aspect4 = Cleanliness (C)
-Aspect5 = Front_desk (F) 
+Aspect5 = FrontDesk (F) 
 Aspect6 = Service (S)
 Aspect7 = BusinessService (B)
 and similarly for Weight1 = Value, etc. 
@@ -17,10 +17,10 @@ Key: (Entry_id, Hotel_id, Author_id)
 
 Hotel_info: (Hotel_id, Price, Location)
 
-Review: (Entry_id, Review_date, Content)
-
 Rating: (Entry_id, Overall, Value, Room, Location, Cleanliness, 
-		Front_desk, Service, BusinessService)
+		FrontDesk, Service, BusinessService)
+
+Review: (Entry_id, Review_date, Content)
 
 Vocab: (Entry_id, Aspect_id, vocab_word)
 
@@ -31,12 +31,12 @@ Weight: (Entry_id, Value, Room, Location, Cleanliness, FrontDesk, Service, Busin
 def make_table(cur):
 
 	# drop tables if exists for re-inserting
-	cur.execute('DROP TABLE IF EXISTS Key')
-	cur.execute('DROP TABLE IF EXISTS Hotel_info;')
-	cur.execute('DROP TABLE IF EXISTS Review')
-	cur.execute('DROP TABLE IF EXISTS Rating')
-	cur.execute('DROP TABLE IF EXISTS Aspect_vocab')
-	cur.execute('DROP TABLE IF EXISTS Aspect_weight')
+	# cur.execute('DROP TABLE IF EXISTS Key')
+	# cur.execute('DROP TABLE IF EXISTS Hotel_info;')
+	# cur.execute('DROP TABLE IF EXISTS Rating')
+	# cur.execute('DROP TABLE IF EXISTS Review')
+	# cur.execute('DROP TABLE IF EXISTS Aspect_vocab')
+	# cur.execute('DROP TABLE IF EXISTS Aspect_weight')
 
 	# create table with the nonempty data from <filename>
 	cur.execute('''CREATE TABLE Hotel_info
