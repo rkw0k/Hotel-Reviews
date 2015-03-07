@@ -1,3 +1,10 @@
 hotel_100504_parsed_parsed.txt
 hotel_100505_parsed_parsed.txt
 hotel_100506_parsed_parsed.txt
+hotel_100507_parsed_parsed.txt
+hotel_100509_parsed_parsed.txt
+hotel_100527_parsed_parsed.txt
+hotel_100537_parsed_parsed.txt
+hotel_100540_parsed_parsed.txt
+hotel_100542_parsed_parsed.txt
+hotel_100544_parsed_parsed.txt

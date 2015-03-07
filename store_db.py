@@ -27,13 +27,8 @@ Vocab: (Entry_id, Aspect_id, vocab_word)
 Weight: (Entry_id, Value, Room, Location, Cleanliness, FrontDesk, Service, BusinessService)
 
 """
-import sqlite3 as lite
 
-conn = lite.connect('hotels.db')
-conn.text_factory = str
-cur = conn.cursor()
-
-def make_table():
+def make_table(cur):
 
 	# drop tables if exists for re-inserting
 	cur.execute('DROP TABLE IF EXISTS Key')
@@ -83,7 +78,7 @@ def make_table():
 	cur.execute(''' CREATE TABLE Aspect_vocab
 					(Entry_id INT,
 					 Aspect_id INT,
-					 Word TEXT )''')
+					 Word VARCHAR(255) )''')
 
 	cur.execute('''CREATE TABLE Aspect_weight
 					(Entry_id INT,
@@ -95,7 +90,7 @@ def make_table():
 					Service INT,
 					BusinessService INT )''')
 
-def insert_hotel(hotel_info):
+def insert_hotel(cur, hotel_info):
 	query = '''INSERT INTO Hotel_info VALUES (?,?,?) 
 			'''
 	cur.executemany(query, hotel_info)
@@ -103,48 +98,47 @@ def insert_hotel(hotel_info):
 	# rows = cur.fetchall()
 	# print rows
 
-def insert_key(key):
+def insert_key(cur, key):
 	query = ''' INSERT INTO Key VALUES(?,?,?)'''
 	cur.executemany(query, key)
 	
 	# rows = cur.fetchall()
 	# print rows
 
-def insert_rating(rating):
+def insert_rating(cur, rating):
 	query = ''' INSERT INTO Rating VALUES(?, ?, ?, ?, ?, ?, ?, ?,?) '''
 	cur.executemany(query, rating)
 	
 	# rows = cur.fetchall()
 	# print rows
 
-def insert_review(review):
+def insert_review(cur, review):
 	query = ''' INSERT INTO Review VALUES(?, ?, ?) '''
 	cur.executemany(query, review)
 	
 	# rows = cur.fetchall()
 	# print rows
 
-def insert_vocab(vocab):
+def insert_vocab(cur, vocab):
 	query = ''' INSERT INTO Aspect_vocab VALUES(?, ?, ?) '''
 	cur.executemany(query, vocab)
 	
 	# rows = cur.fetchall()
 	# print rows
 
-def insert_weight(weight):
+def insert_weight(cur, weight):
 	query = ''' INSERT INTO Aspect_weight VALUES(?, ?, ?, ?, ?, ?, ?, ?) '''
 	cur.executemany(query, weight)
 
-def sqlcmd():
+def sqlcmd(cur):
 	# cur.execute("SELECT * FROM Key;")
 	# cur.execute("SELECT * FROM Rating;")
 	# cur.execute("SELECT * FROM Review;")
 	# cur.execute("SELECT * FROM Aspect_vocab;")
 	# cur.execute("SELECT * FROM Aspect_weight LIMIT 10;")
-	# cur.execute("SELECT * FROM Hotel_info;")
+	cur.execute("SELECT * FROM Hotel_info;")
 	rows = cur.fetchall()
 	print rows
 
 
 
-	
