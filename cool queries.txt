@@ -1,9 +1,58 @@
-# For Hotel_id1 = 100504, compare to other hotels
+import pandas as pd
+import sqlite3 as lite
+import numpy as np
+from scipy.spatial.distance import cdist, cosine
+# connect to database and load all the tables into separate dataframes
+conn = lite.connect("hotels.db")
+weight = pd.read_sql("SELECT * FROM Aspect_weight;", conn)
+key = pd.read_sql("SELECT * FROM Key;", conn)
+rating = pd.read_sql("SELECT * FROM Rating;", conn)
+hinfo = pd.read_sql("SELECT * FROM Hotel_info;", conn)
 
-select avg(Value), avg(Room), avg(Location), avg(Cleanliness)
-from Aspect_weight where Entry_id between
-(select min(Entry_id) from Key where Hotel_id = 100504)
-and
-(select max(Entry_id) from Key where Hotel_id = 100504)
-and Value > 0, Room > 0, Location > 0, Cleanliness > 0;
+# Warning, vocab and review are heavy on memory
+# vocab = pd.read_sql("SELECT * FROM Aspect_vocab;", conn)
+# review = pd.read_sql("SELECT * FROM Review;", conn)
+# conn.close()
 
+Hid = hinfo['Hotel_id'].values
+def avg_value(hid):
+	# returns the average Aspect rating for "Value"
+	# for hotel_id = hid
+    Vq = """select avg(Value)
+            from Aspect_weight where Entry_id between 
+            (select min(Entry_id) from Key where Hotel_id = %d)
+            and
+            (select max(Entry_id) from Key where Hotel_id = %d); """ % (hid, hid)
+    return = pd.read_sql(Vq, conn).values[0][0]
+
+(3/7)
+# unique hotel_id from Key
+def get_hotel_info():
+    Hq = '''
+    SELECT Hotel_info.Hotel_id, Hotel_info.Price, Hotel_info.Location
+    FROM Hotel_info 
+    JOIN 
+    (SELECT DISTINCT(Hotel_id)
+    FROM Key) as dKey
+    ON dKey.Hotel_id = Hotel_info.Hotel_id;'''
+    hotelids = pd.read_sql(Hq, conn).values
+    return hotelids
+
+Hinfo = get_hotel_info()
+                 
+"""                         
+    if (
+        (avg_temp[0][0] != None)
+        and (avg_temp[0][1] != None)
+        and (avg_temp[0][2] != None) 
+        and (avg_temp[0][3] != None)
+        ):
+        avg_normed = avg_temp / np.sqrt(np.dot(avg_temp[0], avg_temp[0]))
+        avg_hotel.append(avg_normed)
+        hotel_ids.append(hotel)
+    
+    avg_hotel = np.squeeze(avg_hotel)
+    cosines = []
+    for k in xrange(len(avg_hotel)):
+    cosines.append(cosine(avg_hotel[k], avg_100504))
+"""

@@ -28,8 +28,9 @@ def get_hotel_info():
 		location = text[i][2]
 
 		if price.isdigit():
-			hotel_info.append((int(hotel_id[0][1:-1]), int(price), location))
-		else:
-			hotel_info.append((int(hotel_id[0][1:-1]), -1, location))
+			if int(price) > 0 and location != "Unknown":
+				hotel_info.append((int(hotel_id[0][1:-1]), int(price), location))
+		# else:
+		# 	hotel_info.append((int(hotel_id[0][1:-1]), -1, location))
 
 	return tuple(hotel_info)

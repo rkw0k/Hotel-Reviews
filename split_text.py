@@ -5,28 +5,31 @@ Check In/Front Desk 5, Service 6, Business service 7
 overall, value, room, loc, clean, check, serv, biz = aspect
 Split according to databases for insertion.
 
-Key: (Entry_id, Hotel_id, Author_id)
+Key: (hotel_id, entry_id, author)
 
-Hotel_info: (Hotel_id, Price, Location)
+Hotel_info: (hotel_id, price, location)
 
-Review: (Entry_id, Review_date, Content)
+Review: (hotel_id, entry_id, date, content)
 
-Rating: (Entry_id, Overall, Value, Room, Location, Cleanliness, FrontDesk, Service, BusinessService)
+Rating: (hotel_id, entry_id, overall, value, room, location, cleanliness, frontdesk, service, business)
 
-Vocab: (Entry_id, Aspect_id, vocab_word)
+Vocab: (hotel_id, entry_id, aspect_id, vocab_word)
 
-Weight: (Entry_id, Value, Room, Location, Cleanliness, FrontDesk, Service, BusinessService)
+Weight: (hotel_id, entry_id, value, room, location, cleanliness, frontdesk, service, business)
 
 '''
 
 # import numpy as np
 # import itertools
-# from get_review import get_review
 # import re
 # hotel_regex = re.compile(r"_[\d]+_")
 # vocab_regex = re.compile(r"([\w]+)")
 
-def split_text(text, Hotel_id, Entry_id=0):
+# dependency for debug
+from get_review import get_review
+import os
+
+def split_text(text, hotel_id, entry_id=0):
 	''' 
 
 	INPUT: Text and hotel_id from one set of reviews from <filename>
@@ -36,13 +39,15 @@ def split_text(text, Hotel_id, Entry_id=0):
 
 	USAGE: 
 	filename = r"hotel_72572_parsed_parsed.txt"
-	text, Hotel_id = get_review(filename)
-	key, rating, review, vocab, weight = split_text(text, Hotel_id)
+	text, hotel_id = get_review(filename)
+	key, rating, review, vocab, weight, entry_id = split_text(text, hotel_id)
 
 	'''
 
 	firstN = len(text) / 14 
 	# firstN = 3 # first review if firstN = 1
+
+	hid = int(hotel_id)
 
 	key_tuple = [[0, 0, '']] * firstN
 	rating_tuple = [[0, 0, 0, 0, 0, 0, 0, 0, 0]] * firstN
@@ -53,7 +58,7 @@ def split_text(text, Hotel_id, Entry_id=0):
 	for i in xrange(firstN):
 		''' Store the first firstN ratings for into tuples to be inserted into a sql table. '''
 
-		Entry_id += 1
+		entry_id += 1
 
 		# store the entire into separate temp variables
 		Author_id = text[14 * i ][0][8:]
@@ -71,22 +76,31 @@ def split_text(text, Hotel_id, Entry_id=0):
 				# store all the words important to each aspect
 				if len(raw_vocab[k]) > 0:
 					# only store if words are found
-					vocab_tuple.append(tuple([Entry_id, j + 1] + [raw_vocab[k]]))
+					vocab_tuple.append(tuple([hid, entry_id, j + 1] + [raw_vocab[k]]))
 
-		key_tuple[i] = (Entry_id, int(Hotel_id), Author_id)
-		rating_tuple[i] = tuple(([Entry_id] + [int(Rating[0][-1])] + map(int, Rating[1:-1])))
-		review_tuple[i] = tuple((Entry_id, Review_date, Content))
-		weight_tuple[i] = tuple([Entry_id] + one_rating)
+		key_tuple[i] = (hid, entry_id, Author_id)
+		rating_tuple[i] = tuple([hid, entry_id, int(Rating[0][-1])] + map(int, Rating[1:-1]))
+		review_tuple[i] = tuple((hid, entry_id, Review_date, Content))
+		weight_tuple[i] = tuple([hid, entry_id] + one_rating)
 
-	return tuple(key_tuple), tuple(rating_tuple), tuple(review_tuple), tuple(vocab_tuple), tuple(weight_tuple), Entry_id
+	return tuple(key_tuple), tuple(rating_tuple), tuple(review_tuple), tuple(vocab_tuple), tuple(weight_tuple), entry_id
 
 
 
 """
 debug code
-# print "key:", key
-# print "review:", review
-# print "rating:", rating
-# print "(Entry_id, Aspect_id, vocab_word):", "\n", vocab
-# print "weights:", weight
+uncomment dependencies
+
+os.chdir("C:\Users\Rickz\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\Aspects")
+filename = r"hotel_72572_parsed_parsed.txt"
+text, hotel_id = get_review(filename)	
+key, rating, review, vocab, weight, entry_id = split_text(text, hotel_id, entry_id=0)
+
+print "key:", key[-1]
+print "review:", review[-1]
+print "rating:", rating[-1]
+print "vocab:", "\n", vocab[-1]
+print "weight:", weight[-1]
+
+
 """
