@@ -14,6 +14,7 @@ def get_hotel_info():
 		  indicated by -1
 	'''
 	
+	# filename = "C:\Users\Kwok\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\hotel-reviews\Hotel-Reviews\hotel_price_location.txt"
 	filename = "C:\Users\Rickz\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\hotel-reviews\Hotel-Reviews\hotel_price_location.txt"
 	f = open(filename)
 	text = f.read()
@@ -30,7 +31,5 @@ def get_hotel_info():
 		if price.isdigit():
 			if int(price) > 0 and location != "Unknown":
 				hotel_info.append((int(hotel_id[0][1:-1]), int(price), location))
-		# else:
-		# 	hotel_info.append((int(hotel_id[0][1:-1]), -1, location))
-
+				
 	return tuple(hotel_info)

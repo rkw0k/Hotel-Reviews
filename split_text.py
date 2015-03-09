@@ -49,6 +49,8 @@ def split_text(text, hotel_id, entry_id=0):
 
 	hid = int(hotel_id)
 
+	print '%.4f complete' % ( int(entry_id) / 200000.) 
+
 	key_tuple = [[0, 0, '']] * firstN
 	rating_tuple = [[0, 0, 0, 0, 0, 0, 0, 0, 0]] * firstN
 	review_tuple = [[0, '', '']] * firstN
@@ -92,6 +94,7 @@ debug code
 uncomment dependencies
 
 os.chdir("C:\Users\Rickz\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\Aspects")
+os.chdir("C:\Users\Kwok\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\Aspects")
 filename = r"hotel_72572_parsed_parsed.txt"
 text, hotel_id = get_review(filename)	
 key, rating, review, vocab, weight, entry_id = split_text(text, hotel_id, entry_id=0)

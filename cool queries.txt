@@ -14,18 +14,109 @@ hinfo = pd.read_sql("SELECT * FROM Hotel_info;", conn)
 # review = pd.read_sql("SELECT * FROM Review;", conn)
 # conn.close()
 
-Hid = hinfo['Hotel_id'].values
-def avg_value(hid):
-	# returns the average Aspect rating for "Value"
-	# for hotel_id = hid
-    Vq = """select avg(Value)
-            from Aspect_weight where Entry_id between 
-            (select min(Entry_id) from Key where Hotel_id = %d)
-            and
-            (select max(Entry_id) from Key where Hotel_id = %d); """ % (hid, hid)
-    return = pd.read_sql(Vq, conn).values[0][0]
+Hid = hinfo['hotel_id'].values
 
-(3/7)
+def avg_value(hid):
+    Vq = """select avg(value) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    val = pd.read_sql(Vq, conn).values[0][0]
+    if val:
+        return val
+    else:
+        return -1.
+
+def avg_room(hid):
+    Rq = """select avg(room) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    room = pd.read_sql(Rq, conn).values[0][0]
+    if room:
+        return room
+    else:
+        return -1.
+
+def avg_location(hid):
+    Lq = """select avg(location) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    loc = pd.read_sql(Lq, conn).values[0][0]
+    if loc:
+        return loc
+    else:
+        return -1.
+
+def avg_cleanliness(hid):
+    Cq = """select avg(cleanliness) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    clean = pd.read_sql(Cq, conn).values[0][0]
+    if clean:
+        return clean
+    else:
+        return -1.
+
+def avg_frontdesk(hid):
+    Fq = """select avg(frontdesk) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    fd = pd.read_sql(Fq, conn).values[0][0]
+    if fd:
+        return fd
+    else:
+        return -1.
+
+def avg_service(hid):
+    Sq = """select avg(service) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    serv = pd.read_sql(Sq, conn).values[0][0]
+    if serv:
+        return serv
+    else:
+        return -1.
+
+def avg_business(hid):
+    Bq = """select avg(business) from Aspect_weight 
+            where hotel_id = %d; """ % hid
+    business = pd.read_sql(Bq, conn).values[0][0]
+    if business:
+        return business
+    else:
+        return -1.
+
+def plot_value():
+    avgValues, hidPrice = {},{}
+    x, y = [], []
+    for hid_price_loc in Hinfo:
+        hid, price, loc = hid_price_loc
+        x.append(price)
+        y.append(avg_value(hid))
+
+    plt.scatter(x,y)
+    plt.xlabel('price')
+    plt.ylabel('average Aspect:Value')
+
+def plot_location(city):
+    avgLocation, hidPrice = {}, {}
+    x, y = [], []
+    for hid_price_loc in Hinfo:
+        hid, price, loc = hid_price_loc
+        x.append(price)
+        y.append(avg_location(hid))
+
+    plt.scatter(x,y)
+    plt.xlabel('price')
+    plt.ylabel('average Aspect:Location')
+
+def plot_room(city):
+    avgRoom, hidPrice = {}, {}
+    x, y = [], []
+    for hid_price_loc in Hinfo:
+        hid, price, loc = hid_price_loc
+        hidPrice[hid] = price
+        x.append(price)
+        y.append(avg_room[hid])
+
+    plt.scatter(x,y)
+    plt.xlabel('price')
+    plt.ylabel('average Aspect:Room')
+
+plot_location()
 # unique hotel_id from Key
 def get_hotel_info():
     Hq = '''

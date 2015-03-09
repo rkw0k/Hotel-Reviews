@@ -7,8 +7,8 @@ import os
 import sqlite3 as lite
 
 def fill_database(cur):
-	# f = open('hotel_name.txt')
-	f = open('short_name.txt')
+	f = open('hotel_name.txt')
+	# f = open('short_name.txt')
 	hotel_list = f.read().split()
 	f.close()
 
@@ -19,6 +19,7 @@ def fill_database(cur):
 	entry_id = 0  
 	for filename in hotel_list:
 		os.chdir("C:\Users\Rickz\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\Aspects")
+		# os.chdir("C:\Users\Kwok\Dropbox\Zipfian\winter2015\hobby\TripAdvisor\Aspects")
 		text, hotel_id = get_review(filename)
 		key, rating, review, vocab, weight, entry_id = split_text(text, hotel_id, entry_id)
 		insert(cur, key, rating, review, vocab, weight)
@@ -31,7 +32,7 @@ start = time.time()
 
 # connect to sqlite database 
 print "connecting to database ..."
-conn = lite.connect('hotels.db')
+conn = lite.connect('../hotel.db')
 conn.text_factory = str
 cur = conn.cursor()
 

@@ -9,7 +9,6 @@ Aspect4 = Cleanliness (C)
 Aspect5 = FrontDesk (F) 
 Aspect6 = Service (S)
 Aspect7 = BusinessService (B)
-and similarly for Weight1 = Value, etc. 
 
 Below is a list of Table: column names
 
@@ -66,7 +65,7 @@ def make_table(cur):
 	cur.execute('''CREATE TABLE Review
 				   (hotel_id INT,
 				   	entry_id INT,
-				    review TEXT,
+				    rdate TEXT,
 				    content TEXT) ''')
 
 	cur.execute(''' CREATE TABLE Aspect_vocab
