@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 # % matplotlib inline
 # connect to database and load all the tables into separate dataframes
 conn = lite.connect("../hotels.db")
+aspects = ['value', 'room', 'location', 'cleanliness', 'frontdesk', 'service', 'business']
 
 def connect():
 	key = pd.read_sql("SELECT * FROM Key;", conn)
@@ -61,8 +62,7 @@ def plot_two_aspect(aspect, Hinfo1, Hinfo2):
 # aspect = 'location'
 Hinfo_NOLA = get_hotel_info('New_Orleans_Louisiana')
 Hinfo_SF = get_hotel_info('San_Francisco_California')
-plot_two_aspect2('value', Hinfo_SF, Hinfo_NOLA)
-
+plot_two_aspect('value', Hinfo_SF, Hinfo_NOLA)
 
 # cities = pd.read_sql("select distinct(location) from Hotel_info;", conn).values
 # aspect = 'location'

@@ -129,6 +129,14 @@ def get_hotel_info():
     hotelids = pd.read_sql(Hq, conn).values
     return hotelids
 
+
+select count(rating.hotel_id), Hotel_info.location
+from rating
+join Hotel_info
+on Hotel_info.hotel_id = rating.hotel_id
+group by Hotel_info.location
+order by count(rating.hotel_id);
+
 Hinfo = get_hotel_info()
                  
 """                         
