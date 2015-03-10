@@ -14,8 +14,6 @@ Below is a list of Table: column names
 
 Key: (hotel_id, entry_id, author)
 
-Hotel_info: (hotel_id, price, location)
-
 Review: (hotel_id, entry_id, date, content)
 
 Rating: (hotel_id, entry_id, overall, value, room, location, cleanliness, frontdesk, service, business)
@@ -28,11 +26,18 @@ Weight: (hotel_id, entry_id, value, room, location, cleanliness, frontdesk, serv
 """
 
 def make_table(cur):
+	'''
+	
+	INPUT: sqlite3 cursor
+	
+	OUTPUT: None, makes tables for database in cur
+
+	'''
 
 	# drop tables if exists to create new tables
 
 	cur.execute('DROP TABLE IF EXISTS Key')
-	cur.execute('DROP TABLE IF EXISTS Hotel_info;')
+	# cur.execute('DROP TABLE IF EXISTS Hotel_info;')
 	cur.execute('DROP TABLE IF EXISTS Rating')
 	cur.execute('DROP TABLE IF EXISTS Review')
 	cur.execute('DROP TABLE IF EXISTS Aspect_vocab')
@@ -40,10 +45,10 @@ def make_table(cur):
 
 	# create table with the nonempty data from <filename>
 
-	cur.execute('''CREATE TABLE Hotel_info
-				   (hotel_id INT,
-				    price INT,
-				    location TEXT) ''')
+	# cur.execute('''CREATE TABLE Hotel_info
+	# 			   (hotel_id INT,
+	# 			    price INT,
+	# 			    location TEXT) ''')
 
 	cur.execute('''CREATE TABLE Key
 				   (hotel_id INT,
@@ -85,17 +90,25 @@ def make_table(cur):
 					service INT,
 					business INT )''')
 
-
-def insert_hotel(cur, hotel_info):
-	qHotel_info = '''INSERT INTO Hotel_info VALUES (?,?,?) '''
-	cur.executemany(qHotel_info, hotel_info)
+# def insert_hotel(cur, hotel_info):
+# 	qHotel_info = '''INSERT INTO Hotel_info VALUES (?,?,?) '''
+# 	cur.executemany(qHotel_info, hotel_info)
 
 def insert(cur, key, rating, review, vocab, weight):
+	'''
+	
+	INPUT: cursor and tuples 
+
+	OUTPUT: None, inserted into tables from tuples
+	
+	'''
+
 	qKey = ''' INSERT INTO Key VALUES(?,?,?)'''
 	qRating = ''' INSERT INTO Rating VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?,?) '''
 	qReview = ''' INSERT INTO Review VALUES(?, ?, ?, ?) '''
 	qVocab = ''' INSERT INTO Aspect_vocab VALUES(?, ?, ?, ?) '''
 	qWeight = ''' INSERT INTO Aspect_weight VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) '''
+
 	cur.executemany(qKey, key)
 	cur.executemany(qRating, rating)
 	cur.executemany(qReview, review)	
@@ -103,6 +116,11 @@ def insert(cur, key, rating, review, vocab, weight):
 	cur.executemany(qWeight, weight)
 
 def sqlcmd(cur):
+	'''
+	INPUT: 
+
+	OUTPUT:
+	'''
 	# cur.execute("SELECT * FROM Key;")
 	# cur.execute("SELECT * FROM Rating;")
 	# cur.execute("SELECT * FROM Review;")
@@ -111,4 +129,3 @@ def sqlcmd(cur):
 	cur.execute("SELECT * FROM Hotel_info;")
 	rows = cur.fetchall()
 	print rows
-

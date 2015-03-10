@@ -6,6 +6,7 @@ import time
 import os
 import sqlite3 as lite
 
+
 def fill_database(cur):
 	f = open('hotel_name.txt')
 	# f = open('short_name.txt')
@@ -42,10 +43,10 @@ make_table(cur)
 
 print "filling database ..."
 fill_database(cur)
+# fill_hotel_avg(cur)
 
 print "committing ..."
 conn.commit()
 
 print "elapsed = ", time.time() - start
 # run time on laptop about 5 minutes for about 200,000 rows.
-
