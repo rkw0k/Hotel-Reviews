@@ -3,6 +3,7 @@ import sqlite3 as lite
 import numpy as np
 from scipy.spatial.distance import cdist, cosine
 import matplotlib.pyplot as plt
+from scipy.spatial.distance import squareform, pdist
 # % matplotlib inline
 # connect to database and load all the tables into separate dataframes
 conn = lite.connect("../hotels.db")
@@ -139,7 +140,7 @@ def plot_two_hotel(Hinfo1, Hinfo2):
     ax3.scatter(x2, L2, color='blue', alpha=0.2)
     ax3.scatter(x2mean, L2mean, color='blue', marker='x', s=150, linewidths=5)
     ax3.set_xlabel('price')
-    ax3.set_ylabel('average Aspect:Room')
+    ax3.set_ylabel('average Aspect:Location')
     maxL1, maxL2 = np.max(L1), np.max(L2)
     ax3.set_ylim([1., 5.5])
 #     ax3.set_ylim([np.min(L1), max(maxL1, maxL2) + 0.5])
@@ -149,7 +150,7 @@ def plot_two_hotel(Hinfo1, Hinfo2):
     ax4.scatter(x2, C2, color='blue', alpha=0.2)
     ax4.scatter(x2mean, C2mean, color='blue', marker='x', s=150, linewidths=5)
     ax4.set_xlabel('price')
-    ax4.set_ylabel('average Aspect:Room')
+    ax4.set_ylabel('average Aspect:Cleanliness')
     maxC1, maxC2 = np.max(C1), np.max(C2)
     ax4.set_ylim([1., 5.5])
 #     ax4.set_ylim([np.min(C1), max(maxC1, maxC2) + 0.5])
@@ -167,6 +168,9 @@ Hinfo_NOLA = get_hotel_info('New_Orleans_Louisiana')
 Hinfo_SF = get_hotel_info('San_Francisco_California')
 plot_two_aspect('value', Hinfo_SF, Hinfo_NOLA)
 
+
+similarities = squareform(pdist(X, metric='cosine'))
+print similarities[:5, :5]
 # cities = pd.read_sql("select distinct(location) from Hotel_info;", conn).values
 # aspect = 'location'
 # city1 = 'New_Orleans_Louisiana'
