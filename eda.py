@@ -168,7 +168,22 @@ Hinfo_NOLA = get_hotel_info('New_Orleans_Louisiana')
 Hinfo_SF = get_hotel_info('San_Francisco_California')
 plot_two_aspect('value', Hinfo_SF, Hinfo_NOLA)
 
+def get_avgdf(hinfo):
+    df = pd.DataFrame()
+    print hinfo.head()
+    columns = ['price', 'avgO', 'avgV', 'avgR', 'avgL', 'avgC']
+    df[['hotel_id', 'location']] = hinfo[['hotel_id', 'location']]
+    # subtract off the mean then divide by the standard deviation to normalize each column
+    for col in columns:
+        df[col] = (hinfo[col] - hinfo[col].mean()) / hinfo[col].std()
+    return df
 
+df = get_avgdf(hinfo)
+print df.head()
+
+X = df[['price', 'avgO', 'avgV', 'avgR', 'avgL']].values
+sim_euclidean = 1 / (1 + squareform(pdist(X, metric='euclidean')))
+sim_cosine = 0.5 * squareform(pdist(X, metric='cosine'))
 similarities = squareform(pdist(X, metric='cosine'))
 print similarities[:5, :5]
 # cities = pd.read_sql("select distinct(location) from Hotel_info;", conn).values
@@ -183,3 +198,22 @@ print similarities[:5, :5]
 # hotelids = get_hotel_info(city=None)
 
 # key, hinfo, rating, weight = connect()
+
+# metric='cosine returns 0.5 * (1 - cos(x1, x2)) which ranges from [0,1]
+# with 0 being "close" and 1 being "far"
+sim = sim_cosine
+k = 34
+indices = range(len(X))
+indices.remove(k)
+row_k = sim[k, indices]
+print row_k[:10]
+indices of the matrix X
+idx = np.argsort(row_k)[-1:-11:-1]
+idx = np.argsort(row_k)[:10]
+print row_k[idx]
+print "HOTEL NUMBER %d:" % k
+print hinfo.ix[k]
+print "TOP TEN SIMILAR HOTELS"
+print hinfo.ix[idx]
+print "SIMILARITY SCORES"
+print sim[k, idx]
