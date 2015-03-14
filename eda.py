@@ -1,22 +1,28 @@
 import pandas as pd
 import sqlite3 as lite
 import numpy as np
-from scipy.spatial.distance import cdist, cosine
+from scipy.spatial.distance import pdist, squareform
 import matplotlib.pyplot as plt
-from scipy.spatial.distance import squareform, pdist
-# % matplotlib inline
+from sklearn.cluster import KMeans
+from sklearn import metrics
+
+% matplotlib inline
 # connect to database and load all the tables into separate dataframes
 conn = lite.connect("../hotels.db")
-weight = pd.read_sql("SELECT * FROM Aspect_weight;", conn)
-key = pd.read_sql("SELECT * FROM Key;", conn)
 rating = pd.read_sql("SELECT * FROM Rating;", conn)
 hinfo = pd.read_sql("SELECT * FROM H_info;", conn) # contains averages for ratings
 cities = pd.read_sql("select distinct(location) from H_info;", conn).values
 
+
+
+# Unused tables
+# weight = pd.read_sql("SELECT * FROM Aspect_weight;", conn)
+# key = pd.read_sql("SELECT * FROM Key;", conn)
+
 # Warning, vocab and review are heavy on memory
 # vocab = pd.read_sql("SELECT * FROM Aspect_vocab;", conn)
 # review = pd.read_sql("SELECT * FROM Review;", conn)
-# conn.close()
+# conn.close()  
 
 # connect to database and load all the tables into separate dataframes
 aspects = ['value', 'room', 'location', 'cleanliness']
