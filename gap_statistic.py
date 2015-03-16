@@ -1,24 +1,3 @@
-'''
-# Usage example: 
-
-maxK = 5
-numK = range(2, maxK + 1)
-for K in numK:
-    # run multiple K means for data X
-    kmeans_model = KMeans(K, init='random', n_init=20, 
-                    precompute_distances=False,
-                    random_state=1).fit(X)
-    
-    Y = kmeans_model.labels_
-
-cluster = []
-for k in xrange(maxK):
-    cluster.append([X[Y==k]])
-
-gap_statistic = gap_statistic(cluster)
-
-'''
-
 def bound_box(cluster):
     '''
     INPUT: List of clusters: cluster[0], cluster[1], ...
@@ -64,16 +43,25 @@ def get_logWB(xmin, xmax):
     return lbar, sk
 
 def gap_statistic(cluster):
+    '''
+    INPUT: List of clusters: cluster[0], cluster[1], ...
+    
+    OUTPUT: Dictionary of {k : Gap(k) - Gap(k+1) + s(k+1)} for k = 2, 3, ....
+    '''
     xmin, xmax = bound_box(cluster)
     lbar, sk = [],  []
     for k in xrange(K):
-        results = get_logWB(cluster[k], xmin[k], xmax[k])
+        results = get_logWB(xmin[k], xmax[k])
         lbar.append(results[0])
         sk.append(results[1])
 
     logW = get_logW(cluster)
-    gap = [lbar[k] - logW[k] for k in xrange(K)]
+    gap = np.array([lbar[k] - logW for k in xrange(maxK)])
     shift_gap = np.array(gap[1:])
     new_gap = np.array(gap[:-1])
     sk = np.array(sk[1:])
-    return gap_diff + sk
+    find_positive = new_gap - shift_gap + sk
+    d = {}
+    for k, v in enumerate(find_positive):
+        d[k + 2] = v
+    return d
