@@ -5,7 +5,6 @@ from scipy.spatial.distance import pdist, squareform
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from sklearn import metrics
-from sklearn.ensemble import RandomForestRegressor
 % matplotlib inline
 # connect to database and load all the tables into separate dataframes
 conn = lite.connect("../hotels.db")

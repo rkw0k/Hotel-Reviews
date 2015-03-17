@@ -1,0 +1,38 @@
+<!-- 
+	<table style="width:50%">
+		<thead>
+	  		<tr>
+	  			{% for cols in df1.columns %} 
+	  			<th> {{ cols }} </th>
+	  			{% endfor %}
+	  		</tr>
+	  </thead>
+	  <tbody> 
+	  	{% for rows in df1.iterrows() %} 
+	  	<tr> 
+	  		{% for cell in rows %}
+	  		<td> 
+	  			{{ cell }}
+	  		</td>
+	  		{% endfor %}
+	  	</tr>
+	  	{% endfor %}
+	  </tbody>
+	</table>
+ -->  
+
+ 
+@app.route('/next', methods=['POST'])
+def next():
+	conn = lite.connect('../app.db')
+	data = request.form['user_input']
+	data = str(data)
+	dict = {}
+	print data
+	# conn = lite.connect('../app.db')
+	cur = conn.cursor()
+	city = request.form['user_input']
+	q = """select * from H_normed where city = '%s';""" % city
+	cur.execute(q)
+	lst_of_tups = list(cur.fetchall())
+	return str(lst_of_tups[0])

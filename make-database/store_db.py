@@ -90,6 +90,7 @@ def make_table(cur):
 					service INT,
 					business INT )''')
 
+
 # def insert_hotel(cur, hotel_info):
 # 	qHotel_info = '''INSERT INTO Hotel_info VALUES (?,?,?) '''
 # 	cur.executemany(qHotel_info, hotel_info)

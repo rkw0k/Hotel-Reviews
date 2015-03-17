@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>Enter one of the cities below:<br/> </head>
+  <body>
+  	<form action='/plot_function' method='POST'>
+		<select name='user_input'>
+			{% for city in htmltable1 %}
+		  		<option value="{{city}}"> {{city}} </option>
+		  	{% endfor %}
+		</select>	
+		<input type='submit'/>
+	</form>
+</body>
+</html>

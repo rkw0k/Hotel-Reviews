@@ -9,7 +9,6 @@ from sklearn.cluster import KMeans
 # connect to database
 conn = lite.connect("../hotels.db")
 
-
 def get_hotel_info(city=None):
     """
     INPUT: A city from H_info.city or None
