@@ -1,8 +1,14 @@
-def get_rec(Hinfo, city):
-    ''' Get top hotels. '''
+def get_table(Hinfo, city):
+    '''
+    INPUT: Hinfo a pandas dataframe and city an entry
+           in the 'cities' column.
+
+    OUTPUT: A sub dataframe of Hinfo consisting of the
+            best price to value ratio.
+    '''
     hcity = Hinfo[Hinfo['cluster'] == 0]
     hcity = hcity[hcity['city'] == city]
-    hcity = hcity[hcity['price'] < 200]
+    hcity = hcity[hcity['price'] < 400]
     cols = ['price', 'avgO', 'avgV', 'avgR', 'avgL', 'avgC']
     col_names = ['$', 'overall', 'val', 'rm', 'loc', 'clean']
     hcity = hcity[cols]
