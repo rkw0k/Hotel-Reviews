@@ -10,10 +10,10 @@ def get_table(Hinfo, city):
     hcity = hcity[hcity['city'] == city]
     hcity = hcity[hcity['price'] < 400]
     cols = ['price', 'avgO', 'avgV', 'avgR', 'avgL', 'avgC']
-    col_names = ['$', 'overall', 'val', 'rm', 'loc', 'clean']
+    col_names = ['$', 'overall', 'value', 'room', 'loc', 'clean']
     hcity = hcity[cols]
     hcity.columns = col_names
-    hcity['$/val'] = hcity['$'] / hcity['val']
+    hcity['$/val'] = hcity['$'] / hcity['value']
     col_names.append('$/val')
     rows = hcity[col_names].sort('$/val', ascending=True)
     rows = rows[:10]

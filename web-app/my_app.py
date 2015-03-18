@@ -19,8 +19,10 @@ def submission_page():
     Hinfo = Hinfo.drop('index', 1)
     cities = read_sql('select * from cities ', conn)
     cvalues = cities.values[:, 0]
+    lst = [cvalue.split('_') for cvalue in cvalues]
+    c = [' '.join(elt) for elt in lst]
     conn.close()
-    return render_template('index.html', htmltable1=cvalues)
+    return render_template('index.html', htmltable1=c)
 
 
 @app.route('/plot_function', methods=['POST'])
