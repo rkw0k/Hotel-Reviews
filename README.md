@@ -38,9 +38,7 @@ Overview of data:
 #### K-Means 
 Clustering on four aspect ratings `Value, Room, Location, Cleanliness` (the features)
 
-from the table `H_normed` in the database `app.db` available in the 
-
-`web-app` folder. 
+from the table `H_normed` in the database `app.db` available in the `web-app` folder. 
 
 ### Pipeline
 
