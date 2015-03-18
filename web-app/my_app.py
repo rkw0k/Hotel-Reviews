@@ -18,7 +18,7 @@ def submission_page():
     Hinfo = read_sql('select * from H_normed', conn)
     Hinfo = Hinfo.drop('index', 1)
     cities = read_sql('select * from cities ', conn)
-    cvalues = cities.values[:,0]
+    cvalues = cities.values[:, 0]
     conn.close()
     return render_template('index.html', htmltable1=cvalues)
 

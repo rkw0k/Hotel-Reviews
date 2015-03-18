@@ -30,18 +30,17 @@ def plot2cluster(Hinfo, city, All=None):
     x2med = median(H1['price'])
     Y0 = array([1.*y[0] for y in cities0.values])
     Y1 = array([1.*z[0] for z in cities1.values])
-    
+
     for i in xrange(len(Y0)):
         if isnan(Y0[i]) or Y1[i] == 'nan':
             Y0[i] = 0.
     for j in xrange(len(Y1)):
         if isnan(Y1[j]) or Y1[j] == 'nan':
             Y1[j] = 0.
-    # return Y0, Y1
     Y_tot = Y0 + Y1
     ratio0 = divide(Y0, Y_tot)
     ratio1 = 1 - ratio0
-    
+
     cluster0, cluster1 = 'High quality',  'Low quality'
     lst = [' '.join(word.split('_')) for word in lst]
     trace1 = objs.Bar(x=lst, y=ratio0, name='High ratings')
