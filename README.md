@@ -35,9 +35,25 @@ Overview of data:
 [slides](http://times.cs.uiuc.edu/~wang296/paper/latent-aspect-rating-analysis.pptx)
 
 ### Model
-## K-Means 
-Clustering on four features  `Value, Room, Location, Cleanliness`
+#### K-Means 
+Clustering on four aspect ratings `Value, Room, Location, Cleanliness` (the features)
 
 from the table `H_normed` in the database `app.db` available in the 
 
 `web-app` folder. 
+
+### Pipeline
+
+Store data from [Data page] into SQL databases. Group ratings by
+hotel_id and average the predictions for the aspect ratings.
+
+### Future work
+
+1. Scrape hotel data from Yelp using their API and have non-anonymized data.
+2. Create LARA, a combination of regression and maximum likelihood estimation,
+   code for python to get prediction for the four aspects listed above in Model.
+3. Use word2vec on the keywords extracted from LARA to build an alternative
+   model for unsupervised learning.
+  
+
+
