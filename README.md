@@ -1,5 +1,5 @@
 # Hotel-Reviews
-suggest-inn, an anonymized hotel recommender that finds the best value for your price.
+Suggest-Inn, hotel recommender that finds the best value for your price.
 
 www.suggest-inn.com
 
@@ -20,14 +20,15 @@ obstacle to making data-driven progress is their inability to find enough qualif
 fill their analytics positions." 
 
 ### Data Sources:
-Data was obtained by [Professor Hongning Wang](http://www.cs.virginia.edu/people/faculty/hwang.html).
+Anonymized hotel_id data was obtained by [Professor Hongning Wang](http://www.cs.virginia.edu/people/faculty/hwang.html).
+
 He and co-authors have accompanying machine learning papers discovering latent aspects in the rating.
 Overview of data:
 `2232 Hotels, 37181 Reviews, 34187 Reviewers, 96.5 Avg Len, [3.92-1.23, 3.929+1.23] Rating.`
 
 [Data page](http://times.cs.uiuc.edu/~wang296/Data/)
 
-"Latent Aspect Rating Analysis on Review Text Data: A Rating Regression Approach", [paper](http://sifaka.cs.uiuc.edu/~wang296/paper/rp166f-wang.pdf), 
+"Latent Aspect Rating Analysis on Review Text Data: A Rating Regression Approach", [paper](http://sifaka.cs.uiuc.edu/~wang296/paper/rp166f-wang.pdf),
 [slides](http://times.cs.uiuc.edu/~wang296/paper/hongning-KDD10-v2.pptx)
 
 "Latent Aspect Rating Analysis without Aspect Keyword Supervision",
