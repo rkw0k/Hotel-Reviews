@@ -1,5 +1,5 @@
 # Hotel-Reviews
-#### Suggest-Inn, a hotel recommender that finds the best valued hotel for your price.
+#### Suggest-Inn, a hotel recommender that finds the best valued hotel for the lowest price.
 
 www.suggest-inn.com
 
